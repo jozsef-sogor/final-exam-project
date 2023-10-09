@@ -51,6 +51,7 @@ services:
         - ENVIRONMENT=${APP_ENV}
     ports:
       - "80:80"
+      - "81:81"
     depends_on:
       - rest-backend
       - graphql-backend
