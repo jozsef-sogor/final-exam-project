@@ -12,9 +12,6 @@ jobs:
     services:
       docker:
         image: docker/compose:1.29.2
-        command: up -d
-        ports:
-          - 3306:3306
 
     steps:
       - name: Checkout Repository
