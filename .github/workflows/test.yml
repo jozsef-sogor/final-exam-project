@@ -39,7 +39,7 @@ jobs:
         run: npm test
 
       - name: Run rest-backend Tests
-        working-directory: ./graphql-backend
+        working-directory: ./rest-backend
         run: npm test
 
       - name: Shut down Docker Compose
