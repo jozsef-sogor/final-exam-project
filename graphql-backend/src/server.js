@@ -1,6 +1,7 @@
 
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
+import bodyParser from 'body-parser';
 import resolvers from './resolvers/index.js';
 import typeDefs from './typeDefs.js';
 import authMiddleware from '../config/authMiddleware.js';
@@ -8,6 +9,7 @@ import authorizationMiddleware from '../config/authorizationMiddleware.js';
 import errorMiddleware from '../config/errorMiddleware.js';
 
 const app = express();
+app.use(bodyParser.json());
 
 const server = new ApolloServer({
   typeDefs,
