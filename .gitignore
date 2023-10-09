@@ -1,0 +1,9 @@
+node_modules/
+/rest-backend/node_modules/
+/graphql-backend/node_modules/
+
+.env
+/rest-backend/.env
+/graphql-backend/.env
+
+data/

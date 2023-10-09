@@ -1,0 +1,49 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./test.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id              Int       @id @default(autoincrement())
+  name            String
+  email           String    @unique
+  password        String
+  phoneNumber     String?
+  role            String    @default("client")
+  notes           Note[]
+  orderedProjects Project[] @relation("client")
+  ownedProjects   Project[] @relation("designer")
+}
+
+model Project {
+  id               Int         @id @default(autoincrement())
+  title            String
+  description      String
+  address          String
+  assignedDesigner User?        @relation("designer", fields: [designerId], references: [id], onDelete: Restrict)
+  designerId       Int
+  assignedClient   User?        @relation("client", fields: [clientId], references: [id], onDelete: Restrict)
+  clientId         Int
+  milestones       Milestone[] @relation("projectMilestone")
+  notes            Note[]
+}
+
+model Milestone {
+  id        Int     @id @default(autoincrement())
+  text      String
+  project   Project @relation("projectMilestone", fields: [projectId], references: [id], onDelete: Restrict)
+  projectId Int
+}
+
+model Note {
+  id        Int     @id @default(autoincrement())
+  text      String
+  user      User    @relation(fields: [userId], references: [id], onDelete: Restrict)
+  userId    Int
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Restrict)
+  projectId Int
+}

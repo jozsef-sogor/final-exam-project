@@ -1,0 +1,62 @@
+version: '3.9'
+
+services:
+  rest-backend:
+    build: 
+      context: .
+      dockerfile: ./rest-backend/Dockerfile
+    environment:
+      - APP_ENV=${APP_ENV}
+      - DB_URL=${LIVE_DB_URL}
+      - JWT_SECRET=${JWT_SECRET}
+    depends_on:
+      - mysql
+    networks:
+      - backend_network
+      - database_network
+
+  graphql-backend:
+    build: 
+      context: .
+      dockerfile: ./graphql-backend/Dockerfile
+    environment:
+      - APP_ENV=${APP_ENV}
+      - DB_URL=${LIVE_DB_URL}
+      - JWT_SECRET=${JWT_SECRET}
+    depends_on:
+      - mysql
+    networks:
+      - backend_network
+      - database_network
+
+  mysql:
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - MYSQL_DATABASE=${DB_DATABASE}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - ./data/mysql:/var/lib/mysql 
+    networks:
+      - database_network
+
+  nginx:
+    build: 
+      context: .
+      dockerfile: ./nginx/Dockerfile
+      args:
+        - ENVIRONMENT=${APP_ENV}
+    ports:
+      - "80:80"
+    depends_on:
+      - rest-backend
+      - graphql-backend
+    networks:
+      - backend_network
+
+networks:
+  backend_network:
+  database_network:
