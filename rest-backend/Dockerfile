@@ -17,7 +17,7 @@ RUN npm install prisma@5.4.1
 COPY ./rest-backend .
 
 # Copy ORM files
-COPY ../prisma .
+COPY ./prisma/schema.prisma ./prisma/
 
 # Generate Prisma client
 RUN npx prisma generate
