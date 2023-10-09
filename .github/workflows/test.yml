@@ -28,8 +28,20 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
-      - name: Run Tests
+      - name: Change folder
+        run: cd graphql-backend  
+
+      - name: Run rest-backend Tests
         run: npm test
+      
+      - name: Change folder
+        run: cd ../rest-backend 
+
+      - name: Run rest-backend Tests
+        run: npm test
+      
+      - name: Change folder
+        run: cd ..
 
       - name: Shut down Docker Compose
         run: docker-compose -f docker-compose.test.yaml down
