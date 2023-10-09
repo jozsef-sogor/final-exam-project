@@ -5,6 +5,12 @@ on:
     branches:
       - '*'
 
+env:
+  DAY_OF_WEEK: Monday
+  APP_ENV: dev
+  JWT_SECRET: test-secret
+  TEST_DB_URL: file:./test.db
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -37,5 +43,4 @@ jobs:
         run: npm test
 
       - name: Shut down Docker Compose
-        working-directory: ./app
         run: docker-compose -f docker-compose.test.yaml down
