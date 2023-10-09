@@ -14,9 +14,6 @@
     "prisma:reset": "npx prisma migrate reset --force",
     "prisma:studio": "npx prisma studio"
   },
-  "prisma": {
-    "schema": "../prisma/schema.prisma"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
